@@ -1,0 +1,1 @@
+web: gunicorn cronoawp.wsgi --log-file -
