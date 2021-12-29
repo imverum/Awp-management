@@ -153,11 +153,11 @@ def planilha_standard_activities(standard_activities, wb):
 
 
 
-def planilha_general(geral, wb):
+def planilha_geral(geral, wb):
 
 
     geral.add_table(xl_util.xl_range_abs(0, 0, 1, 10),
-                      {'name': 'general','style': 'Table Style Light 5', 'columns': [{'header': 'user_name'},
+                      {'name': 'geral','style': 'Table Style Light 5', 'columns': [{'header': 'user_name'},
                                                        {'header': 'user_e-mail'},
                                                        {'header': 'verum_project_name'},
                                                        {'header': 'client_project_code'},
