@@ -22,7 +22,7 @@ def criar_planilha(output):
 
     planilha_wp_type(wp_type, wb)
     planilha_standard_activities(standard_activities, wb)
-    planilha_general(general, wb)
+    planilha_geral(geral, wb)
     planilha_cwa(cwa, wb)
     planilha_wp(wp, wb)
 
