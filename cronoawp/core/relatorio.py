@@ -16,7 +16,7 @@ def criar_planilha(output):
 
     wp_type = wb.add_worksheet("wp_type")  # BD
     standard_activities = wb.add_worksheet("standard_activities")  # BD
-    general = wb.add_worksheet("general")  # User
+    geral = wb.add_worksheet("geral")  # User
     cwa = wb.add_worksheet("cwa")  # User
     wp = wb.add_worksheet("wp")  # User
 
@@ -153,10 +153,10 @@ def planilha_standard_activities(standard_activities, wb):
 
 
 
-def planilha_general(general, wb):
+def planilha_general(geral, wb):
 
 
-    general.add_table(xl_util.xl_range_abs(0, 0, 1, 10),
+    geral.add_table(xl_util.xl_range_abs(0, 0, 1, 10),
                       {'name': 'general','style': 'Table Style Light 5', 'columns': [{'header': 'user_name'},
                                                        {'header': 'user_e-mail'},
                                                        {'header': 'verum_project_name'},
@@ -170,36 +170,36 @@ def planilha_general(general, wb):
                                                         {'header': 'version'},
                                                        ]})
 
-    general.write_row(0, 0, ['user_name', 'user_e-mail', 'verum_project_name','client_project_code','client_project_name',
+    geral.write_row(0, 0, ['user_name', 'user_e-mail', 'verum_project_name','client_project_code','client_project_name',
                                          'client_project_type','client_project_class',
                              'client_project_phase','client_project_step','client_project_state','version'],
                       wb.add_format({'bold': True, 'align': 'center', 'valign': 'vcenter', 'font_size': '11'}))
 
-    general.write_row(1, 0,['', '', '', '', '','', '', '', '', '', ''],
+    geral.write_row(1, 0,['', '', '', '', '','', '', '', '', '', ''],
                       wb.add_format({'align': 'center', 'valign': 'vcenter', 'font_size': '11'}))
 
 
-    general.hide_gridlines(2)
-    general.set_column('A:A', 16.00)
-    general.set_column('B:B', 26.00)
-    general.set_column('C:C', 25.57)
-    general.set_column('D:D', 23.71)
-    general.set_column('E:E', 24.57)
-    general.set_column('F:F', 23.43)
-    general.set_column('G:G', 23.86)
-    general.set_column('H:H', 24.86)
-    general.set_column('I:I', 23.14)
-    general.set_column('J:J', 24.14)
-    general.set_column('K:K', 8.43)
-    general.set_row(0, 40.0)
-    general.set_tab_color('orange')
+    geral.hide_gridlines(2)
+    geral.set_column('A:A', 16.00)
+    geral.set_column('B:B', 26.00)
+    geral.set_column('C:C', 25.57)
+    geral.set_column('D:D', 23.71)
+    geral.set_column('E:E', 24.57)
+    geral.set_column('F:F', 23.43)
+    geral.set_column('G:G', 23.86)
+    geral.set_column('H:H', 24.86)
+    geral.set_column('I:I', 23.14)
+    geral.set_column('J:J', 24.14)
+    geral.set_column('K:K', 8.43)
+    geral.set_row(0, 40.0)
+    geral.set_tab_color('orange')
 
 
 
 def planilha_cwa(cwa, wb):
 
 
-    cwa.add_table(xl_util.xl_range_abs(0, 0, 1, 7),
+    cwa.add_table(xl_util.xl_range_abs(0, 0, 1, 8),
                       {'name': 'cwa','style': 'Table Style Light 5', 'columns': [{'header': 'client_project_name'},
                                                        {'header': 'project_area_id'},
                                                        {'header': 'project_area_name'},
@@ -211,7 +211,7 @@ def planilha_cwa(cwa, wb):
                                                         {'header': 'version'}
                                                        ]})
 
-    cwa.write_row(0, 0, ['client_project_name', 'project_area_id', 'project_area_name','cwa_name','cwa_code_1',
+    cwa.write_row(0, 0, ['client_project_name', 'project_area_id', 'project_area_name','cwa_name', 'cwa_description','cwa_code_1',
                                          'cwa_code_2','cwa_code_3', 'version'],
                       wb.add_format({'bold': True, 'align': 'center', 'valign': 'vcenter', 'font_size': '11'}))
 
