@@ -204,6 +204,7 @@ def planilha_cwa(cwa, wb):
                                                        {'header': 'project_area_id'},
                                                        {'header': 'project_area_name'},
                                                        {'header': 'cwa_name'},
+                                                        {'header': 'cwa_description'},
                                                        {'header': 'cwa_code_1'},
                                                        {'header': 'cwa_code_2'},
                                                         {'header': 'cwa_code_3'},
