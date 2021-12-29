@@ -284,7 +284,6 @@ def run_awp(nova_planilha, output):
     ################################leitura das tabelas
     df_wp_type=pd.read_excel(nova_planilha, 'wp_type')
     df_standard_activities=pd.read_excel(nova_planilha, 'standard_activities')
-    df_standard_tasks=pd.read_excel(nova_planilha, 'standard_tasks')
     df_cwa=pd.read_excel(nova_planilha, 'cwa', converters={'project_area_id':str})
     df_wp=pd.read_excel(nova_planilha, 'wp')
     df_general=pd.read_excel(nova_planilha, 'general')
