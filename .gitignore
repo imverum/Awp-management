@@ -2,4 +2,5 @@
 .verum
 .idea
 *pyc
+.awp-management
 __pycache__

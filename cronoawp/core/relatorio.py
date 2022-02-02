@@ -11,6 +11,10 @@ from cronoawp.core.models import Wp_type , Standard_activities
 #wb.define_name('area_grafico', f'=Graf!$N$8:INDEX(Graf!$1:$1048576,13,Graf!$M$8+13)')
 
 
+
+
+
+
 def criar_planilha(output):
     wb = xls.Workbook(output)
 
@@ -290,132 +294,234 @@ def run_awp(nova_planilha, output):
     df_general=pd.read_excel(nova_planilha, 'general')
 
     ################################cwa_id
-    df_cwa['linha'] = range(df_cwa.shape[0])
-    sequencial_cwa = df_cwa.groupby("project_area_name")['linha'].rank("dense", ascending=True).apply(cod_int_number_3dig)
-    df_cwa['cwa_id'] = df_cwa['project_area_id']+'-'+sequencial_cwa
-    df_cwa = df_cwa.drop(['linha'],axis=1)
 
-    df_cwa_1 = df_cwa.merge(df_general.drop(['version'],axis=1), how='left', on='client_project_name')
+    df_cwa['linha'] = range(df_cwa.shape[0])
+
+    sequencial_cwa = df_cwa.groupby("project_area_name")['linha'].rank("dense", ascending=True).apply(
+        cod_int_number_3dig)
+
+    df_cwa['cwa_id'] = df_cwa['project_area_id'] + '-' + sequencial_cwa
+
+    df_cwa = df_cwa.drop(['linha'], axis=1)
+
+    df_cwa_1 = df_cwa.merge(df_general.drop(['version'], axis=1), how='left', on='client_project_name')
+
     df_cwa_1['created_by'] = df_cwa_1['user_name']
+
     df_cwa_1['updated_by'] = df_cwa_1['user_name']
+
     df_cwa_1['created_at'] = data_atual
+
     df_cwa_1['updated_at'] = data_atual
-    df_cwa_1['version'] = df_cwa_1['version'].fillna(0)+1
+
+    df_cwa_1['version'] = df_cwa_1['version'].fillna(0) + 1
 
     ################################wp_id
+
     cols_cwa = ['client_project_name',
+
                 'project_area_id',
+
                 'project_area_name',
+
                 'cwa_id',
+
                 'cwa_name',
+
                 'cwa_description',
+
                 'cwa_code_1',
+
                 'cwa_code_2',
+
                 'cwa_code_3',
+
                 'created_at',
+
                 'created_by',
+
                 'updated_at',
+
                 'updated_by']
 
     df_wp_item = (
-                     df_wp
-                     .merge(df_cwa_1[cols_cwa], how='left', on='cwa_name')
-                     .merge(df_wp_type, how='left', on=['sub_discipline', 'discipline'])
-                 )
+
+        df_wp
+
+            .merge(df_cwa_1[cols_cwa], how='left', on='cwa_name')
+
+            .merge(df_wp_type, how='left', on=['sub_discipline', 'discipline'])
+
+    )
 
     df_wp_item['linha'] = range(df_wp_item.shape[0])
+
     sequencial_wp = df_wp_item.groupby("cwa_name")['linha'].rank("dense", ascending=True).apply(cod_int_number_3dig)
-    df_wp_item['wp_id'] = df_wp_item['cwa_id']+'-'+df_wp_item['sub_discipline_id']+'-'+sequencial_wp
-    df_wp_item = df_wp_item.drop(['linha'],axis=1)
+
+    df_wp_item['wp_id'] = df_wp_item['cwa_id'] + '-' + df_wp_item['sub_discipline_id'] + '-' + sequencial_wp
+
+    df_wp_item = df_wp_item.drop(['linha'], axis=1)
 
     ################################item__id
+
     df_wp_item['linha'] = range(df_wp_item.shape[0])
+
     sequencial_item = (
-                          df_wp_item
-                          .groupby("work_package_description")['linha']
-                          .rank("dense", ascending=True)
-                          .apply(cod_int_number_4dig)
-                      )
-    df_wp_item['item_id'] = df_wp_item['wp_id']+'-'+sequencial_item
-    df_wp_item = df_wp_item.drop(['linha'],axis=1)
+
+        df_wp_item
+
+            .groupby("work_package_description")['linha']
+
+            .rank("dense", ascending=True)
+
+            .apply(cod_int_number_4dig)
+
+    )
+
+    df_wp_item['item_id'] = df_wp_item['wp_id'] + '-' + sequencial_item
+
+    df_wp_item = df_wp_item.drop(['linha'], axis=1)
 
     cols_wp_item = ['item_id',
+
                     'wp_id',
+
                     'cwa_id',
+
                     'item_description',
+
                     'work_package_description',
+
                     'cwa_description',
+
                     'tag',
+
                     'sub_discipline',
+
                     'discipline',
+
                     'client_project_name',
+
                     'wp_code_1',
+
                     'wp_code_2',
+
                     'wp_code_3',
+
                     'created_at',
+
                     'created_by',
+
                     'updated_at',
+
                     'updated_by',
+
                     'version'
-                   ]
+
+                    ]
 
     ################################activity_id
+
     cols_activity_id = ['activity_id',
+
                         'item_id',
+
                         'wp_id',
+
                         'cwa_id',
+
                         'activity_name',
+
                         'tag',
+
                         'work_package_type',
+
                         'project_phase',
+
                         'duration',
+
                         'item_description',
+
                         'work_package_description',
+
                         'sub_discipline',
+
                         'discipline',
+
                         'client_project_name',
+
                         'physical_progress',
+
                         'financial_progress',
+
                         'responsible',
+
                         'wp_code_1',
+
                         'wp_code_2',
+
                         'wp_code_3',
+
                         'created_at',
+
                         'created_by',
+
                         'updated_at',
+
                         'updated_by',
+
                         'version'
-                       ]
 
-    df_activitiy = (
-                       df_wp_item[cols_wp_item]
-                      .merge(df_wp_type, how='left', on=['discipline', 'sub_discipline'])
-                      .merge(df_standard_activities, how='left', on=['discipline', 'sub_discipline'])
-                   )
+                        ]
 
-    linha = [cod_int_number_6dig(i) for i in range(1,df_activitiy.shape[0]+1)]
-    df_activitiy['activity_id'] = (
-        df_activitiy['cwa_id'].apply(get_string(4))+
-        df_activitiy['sub_discipline_id']+
-        '-'+
-        linha+'-'+
-        df_activitiy['standard_activities_id']
-                                  )
+    df_activity = (
+
+        df_wp_item[cols_wp_item]
+
+            .merge(df_wp_type, how='left', on=['discipline', 'sub_discipline'])
+
+            .merge(df_standard_activities, how='left', on=['discipline', 'sub_discipline'])
+
+    )
 
     ################################predecessor_activity_id
-    df_activitiy = df_activitiy.fillna({'predecessor': 'XXXXX'})
-    linha = [cod_int_number_6dig(i) for i in range(1,df_activitiy.shape[0]+1)]
-    df_activitiy['predecessor_activity_id'] = (
-             df_activitiy['cwa_id'].apply(get_string(4))+
-             df_activitiy['sub_discipline_id']+
-             '-'+
-             linha+'-'+
-             df_activitiy['predecessor']
-                                              )
+
+    data = list(df_activity['item_id'].drop_duplicates())
+
+    df_aux_item_id = pd.DataFrame(data, index=range(len(data)), columns=['item_id'])
+
+    df_aux_item_id['sequencial_activity'] = range(1, len(data) + 1)
+
+    df_aux_item_id['sequencial_activity'] = df_aux_item_id['sequencial_activity'].apply(cod_int_number_6dig)
+
+    df_activity = df_activity.merge(df_aux_item_id, on='item_id')
+
+    df_activity['activity_id'] = (
+
+            df_activity['cwa_id'].apply(get_string(4)) +
+
+            df_activity['sub_discipline_id'] +
+
+            '-' +
+
+            df_activity['sequencial_activity'] + '-' +
+
+            df_activity['standard_activities_id']
+
+    )
+
+    ################################predecessor_activity_id
+
+    df_activity['predecessor_activity_id'] = (df_activity['activity_id'].str[:14] + '-' +
+
+                                              df_activity['predecessor'])
+
     ################################df_relation
+
     cols = ['predecessor_activity_id', 'activity_id', 'relation', 'lag']
-    index_filter = df_activitiy['predecessor_activity_id'].apply(filter_null_predecessor)
-    df_relation = df_activitiy[cols][index_filter]
+
+    df_relation = df_activity.dropna(subset=['predecessor'])[cols]
+
     df_relation.columns = ['predecessor_activity_id', 'sucessor_activity_id', 'relation', 'lag']
 
     ################################save tables
@@ -423,5 +529,5 @@ def run_awp(nova_planilha, output):
     df_cwa_1[cols_cwa+['version']].to_excel(excel_export,'cwa',index=False)
     df_wp_item[cols_wp_item].to_excel(excel_export,'wp_item',index=False)
     df_relation.to_excel(excel_export,'activity_relation',index=False)
-    df_activitiy[cols_activity_id].to_excel(excel_export,'activity',index=False)
+    df_activity[cols_activity_id].to_excel(excel_export,'activity',index=False)
     excel_export.save()
