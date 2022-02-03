@@ -20,7 +20,7 @@ def criar_planilha(output):
 
     wp_type = wb.add_worksheet("wp_type")  # BD
     standard_activities = wb.add_worksheet("standard_activities")  # BD
-    geral = wb.add_worksheet("geral")  # User
+    geral = wb.add_worksheet("general")  # User
     cwa = wb.add_worksheet("cwa")  # User
     wp = wb.add_worksheet("wp")  # User
 
