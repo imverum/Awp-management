@@ -161,7 +161,7 @@ def planilha_geral(geral, wb):
 
 
     geral.add_table(xl_util.xl_range_abs(0, 0, 1, 10),
-                      {'name': 'geral','style': 'Table Style Light 5', 'columns': [{'header': 'user_name'},
+                      {'name': 'general','style': 'Table Style Light 5', 'columns': [{'header': 'user_name'},
                                                        {'header': 'user_e-mail'},
                                                        {'header': 'verum_project_name'},
                                                        {'header': 'client_project_code'},
@@ -219,7 +219,7 @@ def planilha_cwa(cwa, wb):
                                          'cwa_code_2','cwa_code_3', 'version'],
                       wb.add_format({'bold': True, 'align': 'center', 'valign': 'vcenter', 'font_size': '11'}))
 
-    cwa.write_row(1, 0,[cwa.data_validation('A2', {'validate': 'list', 'source': '=OFFSET(geral!$E$2,0,0,COUNTA(geral!E:E),1)'}), '', '', '', '','', '', ''],
+    cwa.write_row(1, 0,[cwa.data_validation('A2', {'validate': 'list', 'source': '=OFFSET(general!$E$2,0,0,COUNTA(general!E:E),1)'}), '', '', '', '','', '', ''],
                       wb.add_format({'align': 'center', 'valign': 'vcenter', 'font_size': '11'}))
 
 
@@ -257,7 +257,7 @@ def planilha_wp(wp, wb):
                                          'item_description','wp_code_1','wp_code_2','wp_code_3', 'version'],
                       wb.add_format({'bold': True, 'align': 'center', 'valign': 'vcenter', 'font_size': '11'}))
 
-    wp.write_row(1, 0,[wp.data_validation('A2', {'validate': 'list', 'source': '=OFFSET(cwa!$D$2,0,0,COUNTA(cwa!D:D),1)'}), wp.data_validation('B2', {'validate': 'list', 'source': '=OFFSET(wp_type!$A$2,0,0,COUNTA(wp_type!A:A),1)'}), wp.data_validation('C2', {'validate': 'list', 'source': '=OFFSET(wp_type!$B$2,0,0,COUNTA(wp_type!B:B),1)'}), '', '','', '', '', '', ''],
+    wp.write_row(1, 0,[wp.data_validation('A2', {'validate': 'list', 'source': '=OFFSET(cwa!$D$2,0,0,COUNTA(cwa!D:D),1)'}), wp.data_validation('B2', {'validate': 'list', 'source': '=OFFSET(wp_type!$A$2,0,0,COUNTA(wp_type!A:A),1)'}),'=IFERROR(VLOOKUP(wp!B2,wp_type!A:B,2,0),0)', '', '','', '', '', '', ''],
                       wb.add_format({'align': 'center', 'valign': 'vcenter', 'font_size': '11'}))
 
 
