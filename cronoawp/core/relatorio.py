@@ -524,10 +524,66 @@ def run_awp(nova_planilha, output):
 
     df_relation.columns = ['predecessor_activity_id', 'sucessor_activity_id', 'relation', 'lag']
 
+    ################################integridade
+
+    df_integridade = pd.DataFrame(columns=['Aba', 'coluna', 'input_incorreto', 'erro'])
+
+    for w in df_standard_activities['discipline']:
+        reg_erros = []
+        if w not in list(df_wp_type['discipline']) and w in list(df_wp['discipline']):
+            reg_erros.append('standard_activities')
+            reg_erros.append('discipline')
+            reg_erros.append(w)
+            reg_erros.append('Disciplina não encontrada na tabela wp_type coluna discipline')
+            df_integridade.loc[len(df_integridade)] = reg_erros
+
+    for k in df_standard_activities['sub_discipline']:
+        reg_erros = []
+        if k not in list(df_wp_type['sub_discipline']) and k in list(df_wp['sub_discipline']):
+            reg_erros.append('standard_activities')
+            reg_erros.append('sub_discipline')
+            reg_erros.append(k)
+            reg_erros.append('Subdiscipline não encontrada na tabela wp_type coluna sub_discipline')
+            df_integridade.loc[len(df_integridade)] = reg_erros
+
+    for x in df_wp['sub_discipline']:
+        reg_erros = []
+        if x not in list(df_standard_activities['sub_discipline']):
+            reg_erros.append('wp')
+            reg_erros.append('sub_discipline')
+            reg_erros.append(x)
+            reg_erros.append('Subdisciplina não encontrada na tabela standard_activities coluna sub_discipline')
+
+            df_integridade.loc[len(df_integridade)] = reg_erros
+
+    for y in df_wp['discipline']:
+        reg_erros = []
+        if y not in list(df_standard_activities['discipline']):
+            reg_erros.append('wp')
+            reg_erros.append('discipline')
+            reg_erros.append(y)
+            reg_erros.append('Disciplina não encontrada na tabela standard_activities coluna discipline')
+            df_integridade.loc[len(df_integridade)] = reg_erros
+
+    for z in df_wp['cwa_name']:
+        reg_erros = []
+        if z not in list(df_cwa['cwa_name']):
+            reg_erros.append('wp')
+            reg_erros.append('cwa_name')
+            reg_erros.append(z)
+            reg_erros.append('CWA não encontrada na tabela cwa coluna cwa_name - Com isso não foi possivel criar os IDs da atividade')
+            df_integridade.loc[len(df_integridade)] = reg_erros
+
+
+
+    df_integridade = df_integridade.drop_duplicates(subset='informação', keep='first')
+
+
     ################################save tables
     excel_export = pd.ExcelWriter(output)
     df_cwa_1[cols_cwa+['version']].to_excel(excel_export,'cwa',index=False)
     df_wp_item[cols_wp_item].to_excel(excel_export,'wp_item',index=False)
     df_relation.to_excel(excel_export,'activity_relation',index=False)
     df_activity[cols_activity_id].to_excel(excel_export,'activity',index=False)
+    df_integridade.to_excel(excel_export, 'integridade', index=False)
     excel_export.save()

@@ -12,7 +12,11 @@ def filter_null_predecessor(cod):
 def get_string(n, left=True):
     if left:
         def f(string):
-            return string[:n]
+            try:
+                a = string[:n]
+            except:
+                a = 'cwa não encontrado'
+            return a
     else:
         def f(string):
             return string[len(string)-n:]

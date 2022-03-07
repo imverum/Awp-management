@@ -29,7 +29,7 @@ SECRET_KEY = config('SECRET_KEY')
 
 DEBUG = config('DEBUG', default=False, cast=bool)
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='', cast=Csv())
-
+MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
 # Application definition
 
 INSTALLED_APPS = [
@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'import_export',
     #apps sistema
-    'cronoawp.core',
+    'cronoawp.core.apps.CoreConfig',
+    'cronoawp.account.apps.AccountConfig'
 ]
 
 MIDDLEWARE = [
@@ -135,3 +136,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+
+LOGIN_REDIRECT_URL = 'home'
+LOGIN_URL = 'login'
+LOGOUT_URL = 'logout'
+
+#CONFIGURAÇÃO DE E-MAIL
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
