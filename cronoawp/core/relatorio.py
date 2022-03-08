@@ -537,6 +537,15 @@ def run_awp(nova_planilha, output):
             reg_erros.append('Disciplina não encontrada na tabela wp_type coluna discipline')
             df_integridade.loc[len(df_integridade)] = reg_erros
 
+    for t in df_wp['sub_discipline']+"-"+df_wp['discipline']:
+        reg_erros = []
+        if t not in list(df_standard_activities['sub_discipline']+"-"+df_standard_activities['discipline']):
+            reg_erros.append('wp')
+            reg_erros.append('discipline')
+            reg_erros.append(t)
+            reg_erros.append(f'A Subdisciplina cadastrada não pertence a Disciplina')
+            df_integridade.loc[len(df_integridade)] = reg_erros
+
     for k in df_standard_activities['sub_discipline']:
         reg_erros = []
         if k not in list(df_wp_type['sub_discipline']) and k in list(df_wp['sub_discipline']):
@@ -575,8 +584,10 @@ def run_awp(nova_planilha, output):
             df_integridade.loc[len(df_integridade)] = reg_erros
 
 
-
-    df_integridade = df_integridade.drop_duplicates(subset='informação', keep='first')
+    try:
+        df_integridade = df_integridade.drop_duplicates(subset='informação', keep='first')
+    except:
+        pass
 
 
     ################################save tables
