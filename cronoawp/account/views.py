@@ -4,13 +4,13 @@ from django.http import HttpResponse
 from django.contrib.auth import authenticate,login
 from django.contrib.auth.decorators import login_required
 
-
+from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
 
 from cronoawp.account.forms import LoginForm, UserRegistrationForm, UserEditForm, ProfileEditForm
 from cronoawp.account.models import Profile
 
-
+@csrf_exempt
 def user_login(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
@@ -31,7 +31,7 @@ def user_login(request):
         form = LoginForm()
         return render(request, 'account/login.html', {'form':form})
 
-
+@csrf_exempt
 def register(request):
     if request.method == 'POST':
         user_form = UserRegistrationForm(request.POST)
@@ -46,7 +46,7 @@ def register(request):
 
         user_form = UserRegistrationForm()
         return render(request, 'account/register_done.html', {'user_form': user_form})
-
+@csrf_exempt
 @login_required
 def edit(request):
     if request.method == 'POST':
@@ -64,7 +64,7 @@ def edit(request):
         profile_form = ProfileEditForm(instance=request.user)
 
         return render(request,'account/edit.html',{'user_form':user_form,'profile_form':profile_form})
-
+@csrf_exempt
 @login_required
 def user_detail(request, username):
     user = get_object_or_404(User, username=username, is_active=True)

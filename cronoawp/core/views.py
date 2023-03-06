@@ -4,18 +4,19 @@ from django.shortcuts import render
 from django.views import View
 from django.contrib import messages
 import io
-
+from django.views.decorators.csrf import csrf_exempt
 from cronoawp.core.relatorio import criar_planilha, gerar_cronograma
 from django.contrib.auth.decorators import login_required
 
+@csrf_exempt
 @login_required
 def home(request):
 
     return render(request,'index.html')
 
-
-class ExportarExcel(View):
-    def get(self,  request):
+@csrf_exempt
+@login_required
+def ExportarExcel(request):
 
         output = io.BytesIO()
 
@@ -31,7 +32,7 @@ class ExportarExcel(View):
         response['Content-Disposition'] = 'attachment; filename=%s' % filename
 
         return response
-
+@csrf_exempt
 @login_required
 def ImportatExcel(request):
     if request.method == 'POST':
