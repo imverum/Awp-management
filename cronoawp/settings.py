@@ -29,7 +29,7 @@ SECRET_KEY = config('SECRET_KEY')
 
 DEBUG = config('DEBUG', default=False, cast=bool)
 ALLOWED_HOSTS = ['*']
-CSRF_TRUSTED_ORIGINS = ['*']
+CSRF_TRUSTED_ORIGINS = ['*', 'https://apw-management.azurewebsites.net']
 MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
 # Application definition
 
