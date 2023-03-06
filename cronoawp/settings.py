@@ -81,7 +81,7 @@ WSGI_APPLICATION = 'cronoawp.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'mssql',
+        'ENGINE': 'django.db.backends.mssql',
         'NAME': 'DB_ws5_homolog',
         'USER': 'app_ws5',
         'PASSWORD': '-e:faD^?^<yY2X8(',
