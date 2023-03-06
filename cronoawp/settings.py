@@ -29,6 +29,7 @@ SECRET_KEY = config('SECRET_KEY')
 
 DEBUG = config('DEBUG', default=False, cast=bool)
 ALLOWED_HOSTS = ['*']
+CSRF_TRUSTED_ORIGINS = ['*']
 MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
 # Application definition
 
