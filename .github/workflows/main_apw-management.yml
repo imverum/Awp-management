@@ -60,4 +60,4 @@ jobs:
         with:
           app-name: 'APW-Management'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_3AB8D04C892F43958980AC707C057329 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_4410F095C51E42A587377876A495F70E }}
