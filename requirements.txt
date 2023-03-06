@@ -3,7 +3,7 @@ defusedxml==0.7.1
 diff-match-patch==20200713
 dj-database-url==0.5.0
 dj-static==0.0.6
-Django
+Django==4.1.7
 django-import-export==2.6.1
 django-mssql-backend==2.8.1
 django-pyodbc-azure-2019==2.1.0.0
